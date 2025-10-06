@@ -25,9 +25,10 @@ To get your real Discord information (status, username, bio, badges, etc.), you 
 
 ## Step 4: Update Your Website
 
-1. Open `script.js`
-2. Replace `YOUR_USER_ID` with your Discord user ID
-3. Replace `YOUR_BOT_TOKEN` with your bot token
+1. Copy `env.example` to `.env`
+2. Replace `your_discord_user_id_here` with your Discord user ID
+3. Replace `your_discord_bot_token_here` with your bot token
+4. Open `script.js` and replace the placeholder values with your actual IDs
 
 ## Step 5: Bot Permissions (Optional)
 

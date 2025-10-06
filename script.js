@@ -1,6 +1,7 @@
 // Discord Profile Configuration
-const DISCORD_USER_ID = 'Process.env.DISCORD_USER_ID';
-const DISCORD_BOT_TOKEN = 'Process.env.DISCORD_BOT_TOKEN';
+// These will be replaced by Cloudflare Pages build process
+const DISCORD_USER_ID = '{{DISCORD_USER_ID}}';
+const DISCORD_BOT_TOKEN = '{{DISCORD_BOT_TOKEN}}';
 
 // DOM Elements
 const profileAvatar = document.getElementById('profileAvatar');
