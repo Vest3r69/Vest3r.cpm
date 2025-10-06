@@ -1,6 +1,6 @@
 // Discord Profile Configuration
-const DISCORD_USER_ID = 'YOUR_USER_ID'; // Replace with your Discord user ID
-const DISCORD_BOT_TOKEN = 'YOUR_BOT_TOKEN'; // Replace with your Discord bot token
+const DISCORD_USER_ID = 'Process.env.DISCORD_USER_ID';
+const DISCORD_BOT_TOKEN = 'Process.env.DISCORD_BOT_TOKEN';
 
 // DOM Elements
 const profileAvatar = document.getElementById('profileAvatar');
