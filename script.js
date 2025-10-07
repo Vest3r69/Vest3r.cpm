@@ -1,7 +1,7 @@
 // Discord Profile Configuration
-// Replace these with your actual Discord data
-const DISCORD_USER_ID = '1342161333705244756'; // Your Discord User ID
-const DISCORD_BOT_TOKEN = 'YOUR_ACTUAL_BOT_TOKEN_HERE'; // Replace with your real bot token
+// These will be replaced by Cloudflare Pages build process
+const DISCORD_USER_ID = '{{DISCORD_USER_ID}}'; // Will be replaced during build
+const DISCORD_BOT_TOKEN = '{{DISCORD_BOT_TOKEN}}'; // Will be replaced during build
 
 // DOM Elements
 const profileAvatar = document.getElementById('profileAvatar');
@@ -288,8 +288,8 @@ async function initializeProfile() {
     console.log('Fetching Discord data...');
     
     // Check if we have a valid bot token
-    if (DISCORD_BOT_TOKEN === 'YOUR_BOT_TOKEN_HERE') {
-        console.warn('Discord bot token not set. Please add your bot token to script.js');
+    if (DISCORD_BOT_TOKEN === '{{DISCORD_BOT_TOKEN}}' || DISCORD_BOT_TOKEN === 'YOUR_ACTUAL_BOT_TOKEN_HERE') {
+        console.warn('Discord bot token not set. Please configure environment variables in Cloudflare Pages');
         showFallbackData();
         return;
     }

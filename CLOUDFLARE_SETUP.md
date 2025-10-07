@@ -31,6 +31,7 @@ DISCORD_BOT_TOKEN = your_actual_bot_token_here
 sed -i 's/{{DISCORD_USER_ID}}/'$DISCORD_USER_ID'/g' script.js && sed -i 's/{{DISCORD_BOT_TOKEN}}/'$DISCORD_BOT_TOKEN'/g' script.js
 ```
 3. Set **Build output directory** to: `/` (root)
+4. Set **Root directory** to: `/` (root)
 
 ## Step 4: Deploy
 
