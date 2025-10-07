@@ -1,7 +1,7 @@
 // Discord Profile Configuration
-// These will be replaced by Cloudflare Pages build process
-const DISCORD_USER_ID = '{{DISCORD_USER_ID}}';
-const DISCORD_BOT_TOKEN = '{{DISCORD_BOT_TOKEN}}';
+// Replace these with your actual Discord data
+const DISCORD_USER_ID = '1342161333705244756'; // Your Discord User ID
+const DISCORD_BOT_TOKEN = 'YOUR_BOT_TOKEN_HERE'; // Get from Discord Developer Portal
 
 // DOM Elements
 const profileAvatar = document.getElementById('profileAvatar');
@@ -287,17 +287,30 @@ function addActivityToProfile(activity) {
 async function initializeProfile() {
     console.log('Fetching Discord data...');
     
+    // Check if we have a valid bot token
+    if (DISCORD_BOT_TOKEN === 'YOUR_BOT_TOKEN_HERE') {
+        console.warn('Discord bot token not set. Please add your bot token to script.js');
+        showFallbackData();
+        return;
+    }
+    
     const data = await fetchDiscordData();
     if (data) {
         updateProfileDisplay(data.userData, data.presenceData);
         console.log('Discord profile loaded successfully!');
     } else {
         console.error('Failed to load Discord profile data');
-        // Fallback to static data
-        profileName.textContent = 'Discord User';
-        profileTag.textContent = '#0000';
-        profileAvatar.src = 'https://cdn.discordapp.com/embed/avatars/0.png?size=256';
+        showFallbackData();
     }
+}
+
+// Show fallback data when Discord API fails
+function showFallbackData() {
+    profileName.textContent = 'Omnix404';
+    profileBio.textContent = 'life is a game?';
+    profileActivity.textContent = 'Currently offline';
+    profileAvatar.src = 'https://cdn.discordapp.com/avatars/1342161333705244756/7fa5b958a12522cbadb6d8602fe40b21.png?size=256';
+    statusIndicator.className = 'status-indicator offline';
 }
 
 // Update status periodically
