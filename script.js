@@ -1,7 +1,7 @@
 // Discord Profile Configuration
 // Replace these with your actual Discord data
 const DISCORD_USER_ID = '1342161333705244756'; // Your Discord User ID
-const DISCORD_BOT_TOKEN = 'YOUR_BOT_TOKEN_HERE'; // Get from Discord Developer Portal
+const DISCORD_BOT_TOKEN = 'YOUR_ACTUAL_BOT_TOKEN_HERE'; // Replace with your real bot token
 
 // DOM Elements
 const profileAvatar = document.getElementById('profileAvatar');
