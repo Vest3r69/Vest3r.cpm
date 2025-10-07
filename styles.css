@@ -252,7 +252,7 @@ body::before {
     padding: 2rem;
     margin-bottom: 2rem;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 1.5rem;
     text-align: left;
     border: 2px solid transparent;
@@ -294,6 +294,10 @@ body::before {
     100% { background-position: 0% 50%; }
 }
 
+.profile-avatar {
+    position: relative;
+}
+
 .profile-avatar img {
     width: 80px;
     height: 80px;
@@ -309,6 +313,33 @@ body::before {
     animation: avatarGlow 3s ease-in-out infinite alternate;
 }
 
+.status-indicator {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 3px solid #1a1a1a;
+    transition: all 0.3s ease;
+}
+
+.status-indicator.online {
+    background-color: #43b581;
+}
+
+.status-indicator.idle {
+    background-color: #faa61a;
+}
+
+.status-indicator.dnd {
+    background-color: #f04747;
+}
+
+.status-indicator.offline {
+    background-color: #747f8d;
+}
+
 @keyframes avatarGlow {
     0% { 
         background-position: 0% 50%;
@@ -322,6 +353,29 @@ body::before {
             0 0 25px rgba(0, 255, 255, 0.5),
             0 0 50px rgba(255, 255, 0, 0.4);
     }
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.info-line {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.info-line .label {
+    font-weight: 600;
+    color: #00ffff;
+    min-width: 120px;
+}
+
+.info-line .value {
+    color: #fff;
+    font-weight: 400;
 }
 
 .profile-details h3 {
