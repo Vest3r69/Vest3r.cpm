@@ -6,8 +6,9 @@ const DISCORD_BOT_TOKEN = '{{DISCORD_BOT_TOKEN}}';
 // DOM Elements
 const profileAvatar = document.getElementById('profileAvatar');
 const profileName = document.getElementById('profileName');
-const profileTag = document.getElementById('profileTag');
-const statusIndicator = document.querySelector('.stat-value.online');
+const profileBio = document.getElementById('profileBio');
+const profileActivity = document.getElementById('profileActivity');
+const statusIndicator = document.getElementById('statusIndicator');
 
 // Discord API endpoints
 const DISCORD_API_BASE = 'https://discord.com/api/v10';
@@ -160,29 +161,72 @@ function updateProfileDisplay(userData, presenceData) {
     profileAvatar.src = getAvatarUrl(userData);
     profileAvatar.alt = `${getDisplayName(userData)}'s avatar`;
     
-    // Update username and tag
+    // Update username
     profileName.textContent = getDisplayName(userData);
-    profileTag.textContent = getUserTag(userData);
     
-    // Update status
+    // Update bio (custom status)
+    const bio = getUserBio(presenceData);
+    profileBio.textContent = bio || 'No bio set';
+    
+    // Update status indicator
     const status = getUserStatus(presenceData);
-    statusIndicator.textContent = STATUS_TEXT[status] || 'Offline';
-    statusIndicator.style.color = STATUS_COLORS[status] || STATUS_COLORS.offline;
+    updateStatusIndicator(status);
+    
+    // Update activity
+    updateActivityDisplay(presenceData);
     
     // Update Discord link
     const discordLink = document.querySelector('.discord-btn');
     discordLink.href = `https://discord.com/users/${userData.id}`;
-    
-    // Add badges if any
-    const badges = getUserBadges(userData);
-    if (badges.length > 0) {
-        addBadgesToProfile(badges);
+}
+
+// Get user bio/custom status
+function getUserBio(presenceData) {
+    if (!presenceData || !presenceData.user || !presenceData.user.presence) {
+        return null;
     }
     
-    // Add activity if any
+    const activities = presenceData.user.presence.activities || [];
+    const customStatus = activities.find(activity => activity.type === 4); // Custom Status
+    
+    if (customStatus && customStatus.state) {
+        return customStatus.state;
+    }
+    
+    return null;
+}
+
+// Update status indicator
+function updateStatusIndicator(status) {
+    statusIndicator.className = `status-indicator ${status}`;
+}
+
+// Update activity display
+function updateActivityDisplay(presenceData) {
+    const status = getUserStatus(presenceData);
+    
+    if (status === 'offline') {
+        profileActivity.textContent = 'Currently offline';
+        return;
+    }
+    
     const activity = getUserActivity(presenceData);
     if (activity) {
-        addActivityToProfile(activity);
+        let activityText = '';
+        
+        if (activity.type === 2) { // Spotify
+            activityText = `Listening to ${activity.details} by ${activity.state}`;
+        } else if (activity.type === 0) { // Playing
+            activityText = `Playing ${activity.name}`;
+        } else if (activity.type === 1) { // Streaming
+            activityText = `Streaming ${activity.name}`;
+        } else if (activity.type === 3) { // Watching
+            activityText = `Watching ${activity.name}`;
+        }
+        
+        profileActivity.textContent = activityText || 'Online';
+    } else {
+        profileActivity.textContent = 'Online';
     }
 }
 
@@ -262,13 +306,8 @@ function startStatusUpdates() {
         const data = await fetchDiscordData();
         if (data) {
             const status = getUserStatus(data.presenceData);
-            statusIndicator.textContent = STATUS_TEXT[status] || 'Offline';
-            statusIndicator.style.color = STATUS_COLORS[status] || STATUS_COLORS.offline;
-            
-            const activity = getUserActivity(data.presenceData);
-            if (activity) {
-                addActivityToProfile(activity);
-            }
+            updateStatusIndicator(status);
+            updateActivityDisplay(data.presenceData);
         }
     }, 30000); // Update every 30 seconds
 }
